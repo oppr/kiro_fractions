@@ -1,4 +1,3 @@
-import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const QuickFractions = ({ onSelect, title = "Quick Fractions" }) => {
@@ -50,7 +49,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     padding: 10,
-    gap: 8,
   },
   fractionButton: {
     backgroundColor: 'white',
@@ -61,6 +59,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     minWidth: 50,
     alignItems: 'center',
+    margin: 4,
   },
   fractionText: {
     color: '#007bff',

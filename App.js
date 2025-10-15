@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {
   StyleSheet,
   Text,
   View,
-  TextInput,
   TouchableOpacity,
-  ScrollView,
-  Alert
+  ScrollView
 } from 'react-native';
 import { parseFraction } from './utils/fractionUtils';
 import FractionInput from './components/FractionInput';
@@ -223,7 +221,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 3,
+    borderWidth: 1,
+    borderColor: '#e9ecef',
   },
   inputRow: {
     marginBottom: 20,

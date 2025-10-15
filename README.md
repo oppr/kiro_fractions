@@ -33,6 +33,21 @@ npm run android # Android emulator
 npm run web     # Web browser
 ```
 
+## Security
+
+This project uses Expo SDK 51.0.0 with updated dependencies to address security vulnerabilities. The app includes:
+- Updated React Native 0.74.5
+- Latest Expo Status Bar
+- Updated Babel core
+
+## Assets
+
+The project includes placeholder asset files. For production use, replace the placeholder files in the `assets/` directory with actual images:
+- `icon.png` - App icon (1024x1024px recommended)
+- `splash.png` - Splash screen image
+- `adaptive-icon.png` - Android adaptive icon
+- `favicon.png` - Web favicon
+
 ## Usage
 
 1. Enter your first measurement in the first input field
