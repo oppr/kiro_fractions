@@ -12,7 +12,7 @@ A React Native application for adding and subtracting fractional length measurem
 - **Automatic Simplification**: Results are automatically reduced to simplest form
 - **Calculation History**: Keep track of your recent calculations
 - **Decimal Conversion**: See decimal equivalents for precise measurements
-- **Bootstrap UI**: Clean, responsive interface using React Bootstrap
+- **Native UI**: Clean, responsive interface using React Native components
 
 ## Installation
 
@@ -59,7 +59,7 @@ The app handles all standard woodworking fractions:
 ## Technology Stack
 
 - React Native with Expo
-- React Bootstrap for UI components
+- Native React Native components with custom styling
 - Custom fraction calculation utilities
 
 Perfect for carpenters, woodworkers, and DIY enthusiasts who need quick and accurate fractional calculations!

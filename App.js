@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Container, Row, Col, Card, Form, Button, Alert, Badge } from 'react-bootstrap';
-import { Fraction, parseFraction } from './utils/fractionUtils';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  Alert
+} from 'react-native';
+import { parseFraction } from './utils/fractionUtils';
 import FractionInput from './components/FractionInput';
 import QuickFractions from './components/QuickFractions';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App() {
   const [value1, setValue1] = useState('');
@@ -66,163 +73,313 @@ export default function App() {
   };
 
   return (
-    <Container fluid className="py-4" style={{ backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
+    <ScrollView style={styles.container}>
       <StatusBar style="auto" />
 
-      <Row className="justify-content-center">
-        <Col xs={12} md={8} lg={6}>
-          <Card className="shadow-sm">
-            <Card.Header className="bg-primary text-white text-center">
-              <h3 className="mb-0">🔨 Woodworking Calculator</h3>
-              <small>Add & Subtract Fractional Measurements</small>
-            </Card.Header>
+      <View style={styles.header}>
+        <Text style={styles.title}>🔨 Woodworking Calculator</Text>
+        <Text style={styles.subtitle}>Add & Subtract Fractional Measurements</Text>
+      </View>
 
-            <Card.Body>
-              <Form>
-                <Row>
-                  <Col xs={12} md={5}>
-                    <FractionInput
-                      label="First Measurement"
-                      value={value1}
-                      onChange={(val) => {
-                        setValue1(val);
-                        setActiveInput(1);
-                      }}
-                      placeholder="e.g., 1 1/2 or 3/4 or 5"
-                    />
-                  </Col>
+      <View style={styles.card}>
+        <View style={styles.inputRow}>
+          <View style={styles.inputContainer}>
+            <FractionInput
+              label="First Measurement"
+              value={value1}
+              onChange={(val) => {
+                setValue1(val);
+                setActiveInput(1);
+              }}
+              placeholder="e.g., 1 1/2 or 3/4"
+            />
+          </View>
 
-                  <Col xs={12} md={2} className="d-flex align-items-center justify-content-center">
-                    <Form.Select
-                      value={operation}
-                      onChange={(e) => setOperation(e.target.value)}
-                      className="text-center fw-bold"
-                      style={{ fontSize: '1.2rem' }}
-                    >
-                      <option value="add">+</option>
-                      <option value="subtract">-</option>
-                    </Form.Select>
-                  </Col>
+          <View style={styles.operationContainer}>
+            <TouchableOpacity
+              style={[styles.operationButton, operation === 'add' && styles.operationButtonActive]}
+              onPress={() => setOperation('add')}
+            >
+              <Text style={[styles.operationText, operation === 'add' && styles.operationTextActive]}>+</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.operationButton, operation === 'subtract' && styles.operationButtonActive]}
+              onPress={() => setOperation('subtract')}
+            >
+              <Text style={[styles.operationText, operation === 'subtract' && styles.operationTextActive]}>-</Text>
+            </TouchableOpacity>
+          </View>
 
-                  <Col xs={12} md={5}>
-                    <FractionInput
-                      label="Second Measurement"
-                      value={value2}
-                      onChange={(val) => {
-                        setValue2(val);
-                        setActiveInput(2);
-                      }}
-                      placeholder="e.g., 2 3/8 or 1/4 or 3"
-                    />
-                  </Col>
-                </Row>
+          <View style={styles.inputContainer}>
+            <FractionInput
+              label="Second Measurement"
+              value={value2}
+              onChange={(val) => {
+                setValue2(val);
+                setActiveInput(2);
+              }}
+              placeholder="e.g., 2 3/8 or 1/4"
+            />
+          </View>
+        </View>
 
-                <Row className="mb-3">
-                  <Col>
-                    <div className="d-grid gap-2 d-md-flex justify-content-md-center">
-                      <Button
-                        variant="success"
-                        size="lg"
-                        onClick={calculate}
-                        disabled={!value1 || !value2}
-                      >
-                        Calculate
-                      </Button>
-                      <Button
-                        variant="outline-secondary"
-                        size="lg"
-                        onClick={clear}
-                      >
-                        Clear
-                      </Button>
-                    </div>
-                  </Col>
-                </Row>
-              </Form>
+        <View style={styles.buttonRow}>
+          <TouchableOpacity
+            style={[styles.calculateButton, (!value1 || !value2) && styles.buttonDisabled]}
+            onPress={calculate}
+            disabled={!value1 || !value2}
+          >
+            <Text style={styles.calculateButtonText}>Calculate</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.clearButton} onPress={clear}>
+            <Text style={styles.clearButtonText}>Clear</Text>
+          </TouchableOpacity>
+        </View>
 
-              <QuickFractions
-                onSelect={handleQuickFraction}
-                title={`Quick Fractions (will fill ${activeInput === 1 ? 'first' : 'second'} measurement)`}
-              />
+        <QuickFractions
+          onSelect={handleQuickFraction}
+          title={`Quick Fractions (will fill ${activeInput === 1 ? 'first' : 'second'} measurement)`}
+        />
 
-              {result && (
-                <Alert variant="success" className="text-center">
-                  <h4 className="mb-2">Result</h4>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
-                    {result.toString()}"
-                  </div>
-                  <small className="text-muted">
-                    ({result.toDecimal().toFixed(4)}" decimal)
-                  </small>
-                </Alert>
-              )}
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+        {result && (
+          <View style={styles.resultContainer}>
+            <Text style={styles.resultTitle}>Result</Text>
+            <Text style={styles.resultValue}>{result.toString()}"</Text>
+            <Text style={styles.resultDecimal}>({result.toDecimal().toFixed(4)}" decimal)</Text>
+          </View>
+        )}
+      </View>
 
       {history.length > 0 && (
-        <Row className="justify-content-center mt-4">
-          <Col xs={12} md={8} lg={6}>
-            <Card className="shadow-sm">
-              <Card.Header className="d-flex justify-content-between align-items-center">
-                <h5 className="mb-0">📋 Calculation History</h5>
-                <Button
-                  variant="outline-danger"
-                  size="sm"
-                  onClick={clearHistory}
-                >
-                  Clear History
-                </Button>
-              </Card.Header>
-              <Card.Body style={{ maxHeight: '300px', overflowY: 'auto' }}>
-                {history.map((calc, index) => (
-                  <div key={index} className="border-bottom py-2">
-                    <div className="d-flex justify-content-between align-items-center">
-                      <div>
-                        <strong>{calc.expression} = {calc.result}"</strong>
-                        <br />
-                        <small className="text-muted">({calc.decimal}" decimal)</small>
-                      </div>
-                      <small className="text-muted">{calc.timestamp}</small>
-                    </div>
-                  </div>
-                ))}
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
+        <View style={styles.card}>
+          <View style={styles.historyHeader}>
+            <Text style={styles.historyTitle}>📋 Calculation History</Text>
+            <TouchableOpacity style={styles.clearHistoryButton} onPress={clearHistory}>
+              <Text style={styles.clearHistoryText}>Clear History</Text>
+            </TouchableOpacity>
+          </View>
+          <ScrollView style={styles.historyContainer}>
+            {history.map((calc, index) => (
+              <View key={index} style={styles.historyItem}>
+                <View>
+                  <Text style={styles.historyExpression}>{calc.expression} = {calc.result}"</Text>
+                  <Text style={styles.historyDecimal}>({calc.decimal}" decimal)</Text>
+                </View>
+                <Text style={styles.historyTime}>{calc.timestamp}</Text>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
       )}
 
-      <Row className="justify-content-center mt-4">
-        <Col xs={12} md={8} lg={6}>
-          <Card className="shadow-sm">
-            <Card.Header>
-              <h6 className="mb-0">💡 Quick Reference</h6>
-            </Card.Header>
-            <Card.Body>
-              <Row>
-                <Col xs={12} md={6}>
-                  <strong>Input Examples:</strong>
-                  <ul className="small mb-0">
-                    <li>Whole numbers: 5, 12, 24</li>
-                    <li>Fractions: 1/2, 3/4, 7/8</li>
-                    <li>Mixed: 1 1/2, 2 3/4, 5 7/16</li>
-                  </ul>
-                </Col>
-                <Col xs={12} md={6}>
-                  <strong>Common Fractions:</strong>
-                  <ul className="small mb-0">
-                    <li>1/16, 1/8, 3/16, 1/4</li>
-                    <li>5/16, 3/8, 7/16, 1/2</li>
-                    <li>9/16, 5/8, 11/16, 3/4</li>
-                  </ul>
-                </Col>
-              </Row>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+      <View style={styles.card}>
+        <Text style={styles.referenceTitle}>💡 Quick Reference</Text>
+        <View style={styles.referenceRow}>
+          <View style={styles.referenceColumn}>
+            <Text style={styles.referenceHeader}>Input Examples:</Text>
+            <Text style={styles.referenceText}>• Whole numbers: 5, 12, 24</Text>
+            <Text style={styles.referenceText}>• Fractions: 1/2, 3/4, 7/8</Text>
+            <Text style={styles.referenceText}>• Mixed: 1 1/2, 2 3/4, 5 7/16</Text>
+          </View>
+          <View style={styles.referenceColumn}>
+            <Text style={styles.referenceHeader}>Common Fractions:</Text>
+            <Text style={styles.referenceText}>• 1/16, 1/8, 3/16, 1/4</Text>
+            <Text style={styles.referenceText}>• 5/16, 3/8, 7/16, 1/2</Text>
+            <Text style={styles.referenceText}>• 9/16, 5/8, 11/16, 3/4</Text>
+          </View>
+        </View>
+      </View>
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f8f9fa',
+  },
+  header: {
+    backgroundColor: '#007bff',
+    padding: 20,
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'white',
+    marginBottom: 5,
+  },
+  subtitle: {
+    fontSize: 14,
+    color: 'white',
+    opacity: 0.9,
+  },
+  card: {
+    backgroundColor: 'white',
+    margin: 15,
+    padding: 20,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  inputRow: {
+    marginBottom: 20,
+  },
+  inputContainer: {
+    marginBottom: 15,
+  },
+  operationContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 15,
+  },
+  operationButton: {
+    backgroundColor: '#f8f9fa',
+    borderWidth: 1,
+    borderColor: '#dee2e6',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginHorizontal: 5,
+    borderRadius: 5,
+  },
+  operationButtonActive: {
+    backgroundColor: '#007bff',
+    borderColor: '#007bff',
+  },
+  operationText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#495057',
+  },
+  operationTextActive: {
+    color: 'white',
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 20,
+  },
+  calculateButton: {
+    backgroundColor: '#28a745',
+    paddingHorizontal: 30,
+    paddingVertical: 15,
+    borderRadius: 8,
+    flex: 0.45,
+  },
+  calculateButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  clearButton: {
+    backgroundColor: '#6c757d',
+    paddingHorizontal: 30,
+    paddingVertical: 15,
+    borderRadius: 8,
+    flex: 0.45,
+  },
+  clearButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  buttonDisabled: {
+    backgroundColor: '#6c757d',
+    opacity: 0.5,
+  },
+  resultContainer: {
+    backgroundColor: '#d4edda',
+    padding: 20,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  resultTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#155724',
+    marginBottom: 10,
+  },
+  resultValue: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#155724',
+    marginBottom: 5,
+  },
+  resultDecimal: {
+    fontSize: 14,
+    color: '#6c757d',
+  },
+  historyHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  historyTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  clearHistoryButton: {
+    backgroundColor: '#dc3545',
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    borderRadius: 5,
+  },
+  clearHistoryText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  historyContainer: {
+    maxHeight: 300,
+  },
+  historyItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#dee2e6',
+  },
+  historyExpression: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  historyDecimal: {
+    fontSize: 12,
+    color: '#6c757d',
+  },
+  historyTime: {
+    fontSize: 12,
+    color: '#6c757d',
+  },
+  referenceTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 15,
+  },
+  referenceRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  referenceColumn: {
+    flex: 1,
+    marginRight: 10,
+  },
+  referenceHeader: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  referenceText: {
+    fontSize: 12,
+    color: '#6c757d',
+    marginBottom: 2,
+  },
+});

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, InputGroup } from 'react-bootstrap';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
 
 const FractionInput = ({ 
   label, 
@@ -9,24 +9,67 @@ const FractionInput = ({
   disabled = false 
 }) => {
   return (
-    <Form.Group className="mb-3">
-      <Form.Label>{label}</Form.Label>
-      <InputGroup>
-        <Form.Control
-          type="text"
+    <View style={styles.container}>
+      <Text style={styles.label}>{label}</Text>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={[styles.input, disabled && styles.inputDisabled]}
           placeholder={placeholder}
           value={value}
-          onChange={(e) => onChange(e.target.value)}
-          size="lg"
-          disabled={disabled}
+          onChangeText={onChange}
+          editable={!disabled}
         />
-        <InputGroup.Text>"</InputGroup.Text>
-      </InputGroup>
-      <Form.Text className="text-muted">
+        <Text style={styles.unit}>"</Text>
+      </View>
+      <Text style={styles.helpText}>
         Enter as: whole number, fraction, or mixed number
-      </Form.Text>
-    </Form.Group>
+      </Text>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: 15,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 8,
+    color: '#495057',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ced4da',
+    borderRadius: 5,
+    backgroundColor: 'white',
+  },
+  input: {
+    flex: 1,
+    paddingHorizontal: 15,
+    paddingVertical: 12,
+    fontSize: 16,
+  },
+  inputDisabled: {
+    backgroundColor: '#e9ecef',
+    color: '#6c757d',
+  },
+  unit: {
+    paddingHorizontal: 15,
+    paddingVertical: 12,
+    backgroundColor: '#e9ecef',
+    borderLeftWidth: 1,
+    borderLeftColor: '#ced4da',
+    fontSize: 16,
+    color: '#495057',
+  },
+  helpText: {
+    fontSize: 12,
+    color: '#6c757d',
+    marginTop: 5,
+  },
+});
 
 export default FractionInput;
