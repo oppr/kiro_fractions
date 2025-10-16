@@ -1,6 +1,6 @@
 # Woodworking Calculator
 
-A React Native application for adding and subtracting fractional length measurements, designed specifically for woodworking projects.
+A React web application for adding and subtracting fractional length measurements, designed specifically for woodworking projects.
 
 ## Features
 
@@ -10,9 +10,11 @@ A React Native application for adding and subtracting fractional length measurem
   - Fractions: `1/2`, `3/4`, `7/8`
   - Mixed numbers: `1 1/2`, `2 3/4`, `5 7/16`
 - **Automatic Simplification**: Results are automatically reduced to simplest form
-- **Calculation History**: Keep track of your recent calculations
+- **Quick Fraction Buttons**: One-click input for common woodworking fractions
+- **Calculation History**: Keep track of your recent calculations with timestamps
 - **Decimal Conversion**: See decimal equivalents for precise measurements
-- **Native UI**: Clean, responsive interface using React Native components
+- **Bootstrap UI**: Clean, responsive interface using React Bootstrap
+- **Web-Only**: Optimized for desktop and mobile browsers
 
 ## Installation
 
@@ -26,35 +28,29 @@ npm install
 npm start
 ```
 
-3. Run on your preferred platform:
-```bash
-npm run ios     # iOS simulator
-npm run android # Android emulator
-npm run web     # Web browser
-```
-
-## Security
-
-This project uses Expo SDK 51.0.0 with updated dependencies to address security vulnerabilities. The app includes:
-- Updated React Native 0.74.5
-- Latest Expo Status Bar
-- Updated Babel core
-
-## Assets
-
-The project includes placeholder asset files. For production use, replace the placeholder files in the `assets/` directory with actual images:
-- `icon.png` - App icon (1024x1024px recommended)
-- `splash.png` - Splash screen image
-- `adaptive-icon.png` - Android adaptive icon
-- `favicon.png` - Web favicon
+3. Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
 
 ## Usage
 
 1. Enter your first measurement in the first input field
 2. Select addition (+) or subtraction (-) operation
 3. Enter your second measurement in the second input field
-4. Click "Calculate" to see the result
-5. View calculation history below the main calculator
+4. Click "Calculate" or press **Enter** to see the result
+5. Use **"Use Result"** button to move the result to the first field for chaining calculations
+6. Use quick fraction buttons for common measurements
+7. View calculation history below the main calculator
+
+### Keyboard Shortcuts
+- **Enter**: Calculate the result (when both fields have values)
+- **Tab**: Navigate between input fields
+
+### Chaining Calculations
+After getting a result, click "Use Result as First Measurement" to:
+- Move the result to the first input field
+- Clear the second input field
+- Set focus to the second field for the next calculation
+
+Perfect for complex calculations like: `12 1/4" - 3 7/8" + 2 1/2" - 1/4"`
 
 ## Input Examples
 
@@ -65,16 +61,56 @@ The project includes placeholder asset files. For production use, replace the pl
 
 ## Common Woodworking Fractions
 
-The app handles all standard woodworking fractions:
+The app includes quick buttons for all standard woodworking fractions:
 - Sixteenths: 1/16, 3/16, 5/16, 7/16, 9/16, 11/16, 13/16, 15/16
 - Eighths: 1/8, 3/8, 5/8, 7/8
 - Quarters: 1/4, 3/4
 - Halves: 1/2
+- Whole: 1
+
+## Build for Production
+
+```bash
+npm run build
+```
+
+Builds the app for production to the `build` folder. The build is minified and optimized for best performance.
 
 ## Technology Stack
 
-- React Native with Expo
-- Native React Native components with custom styling
+- React 18
+- Vite (fast build tool)
+- React Bootstrap 5
+- Bootstrap 5.3
 - Custom fraction calculation utilities
+- Vitest for testing
 
-Perfect for carpenters, woodworkers, and DIY enthusiasts who need quick and accurate fractional calculations!
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── FractionInput.js    # Custom input component with unit display
+│   └── QuickFractions.js   # Quick fraction selector buttons
+├── utils/
+│   └── fractionUtils.js    # Fraction calculation engine
+├── App.js                  # Main application component
+└── index.js               # React entry point
+```
+
+## Security & Performance
+
+This application uses Vite instead of Create React App for:
+- **Faster development**: Lightning-fast hot module replacement
+- **Better security**: Significantly fewer dependencies and vulnerabilities
+- **Modern tooling**: Latest build tools and optimizations
+- **Smaller bundle size**: More efficient production builds
+
+## Available Scripts
+
+- `npm start` or `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm test` - Run tests with Vitest
+
+Perfect for carpenters, woodworkers, and DIY enthusiasts who need quick and accurate fractional calculations in their web browser!
