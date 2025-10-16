@@ -35,7 +35,7 @@
   transition: background-color 0.2s ease;
 }
 
-/* Responsive adjustments */
+/* Mobile-first responsive adjustments */
 @media (max-width: 768px) {
   .d-md-flex {
     flex-direction: column;
@@ -46,6 +46,54 @@
     width: 100%;
     margin-bottom: 0.5rem;
   }
+  
+  /* Compact spacing on mobile */
+  .container-fluid {
+    padding: 1rem !important;
+  }
+  
+  .card {
+    margin: 0.5rem !important;
+  }
+  
+  /* Smaller text on mobile for better fit */
+  .card-header h3 {
+    font-size: 1.5rem;
+  }
+  
+  .card-header small {
+    font-size: 0.8rem;
+  }
+}
+
+/* Extra small screens (phones in portrait) */
+@media (max-width: 576px) {
+  .card-header h3 {
+    font-size: 1.25rem;
+  }
+  
+  .btn-group .btn {
+    min-width: 45px;
+    font-size: 1.25rem;
+  }
+  
+  .alert div {
+    font-size: 1.25rem !important;
+  }
+}
+
+/* Operation buttons styling */
+.btn-group .btn {
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-group .btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,123,255,0.25);
+}
+
+.btn-group .btn:active {
+  transform: translateY(0);
 }
 
 /* Use Result button styling */

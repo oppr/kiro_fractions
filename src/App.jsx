@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Card, Form, Button, Alert, ButtonGroup } from 'react-bootstrap';
 import { parseFraction } from './utils/fractionUtils';
 import FractionInput from './components/FractionInput.jsx';
-import QuickFractions from './components/QuickFractions.jsx';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -12,7 +12,7 @@ function App() {
   const [result, setResult] = useState(null);
   const [operation, setOperation] = useState('add');
   const [history, setHistory] = useState([]);
-  const [activeInput, setActiveInput] = useState(1);
+
 
   const calculate = () => {
     try {
@@ -57,20 +57,13 @@ function App() {
     setHistory([]);
   };
 
-  const handleQuickFraction = (fraction) => {
-    if (activeInput === 1) {
-      setValue1(fraction);
-    } else {
-      setValue2(fraction);
-    }
-  };
+
 
   const useResult = () => {
     if (result) {
       setValue1(result.toString());
       setValue2('');
       setResult(null);
-      setActiveInput(2);
     }
   };
 
@@ -98,35 +91,39 @@ function App() {
                     <FractionInput
                       label="First Measurement"
                       value={value1}
-                      onChange={(val) => {
-                        setValue1(val);
-                        setActiveInput(1);
-                      }}
+                      onChange={setValue1}
                       onKeyPress={handleKeyPress}
                       placeholder="e.g., 1 1/2 or 3/4 or 5"
                     />
                   </Col>
                   
-                  <Col xs={12} md={2} className="d-flex align-items-center justify-content-center">
-                    <Form.Select
-                      value={operation}
-                      onChange={(e) => setOperation(e.target.value)}
-                      className="text-center fw-bold"
-                      style={{ fontSize: '1.2rem' }}
-                    >
-                      <option value="add">+</option>
-                      <option value="subtract">-</option>
-                    </Form.Select>
+                  <Col xs={12} md={2} className="d-flex align-items-center justify-content-center mb-3">
+                    <div className="d-flex flex-column align-items-center">
+                      <Form.Label className="mb-2 small text-muted">Operation</Form.Label>
+                      <ButtonGroup>
+                        <Button
+                          variant={operation === 'add' ? 'primary' : 'outline-primary'}
+                          onClick={() => setOperation('add')}
+                          style={{ fontSize: '1.5rem', fontWeight: 'bold', minWidth: '50px' }}
+                        >
+                          +
+                        </Button>
+                        <Button
+                          variant={operation === 'subtract' ? 'primary' : 'outline-primary'}
+                          onClick={() => setOperation('subtract')}
+                          style={{ fontSize: '1.5rem', fontWeight: 'bold', minWidth: '50px' }}
+                        >
+                          −
+                        </Button>
+                      </ButtonGroup>
+                    </div>
                   </Col>
                   
                   <Col xs={12} md={5}>
                     <FractionInput
                       label="Second Measurement"
                       value={value2}
-                      onChange={(val) => {
-                        setValue2(val);
-                        setActiveInput(2);
-                      }}
+                      onChange={setValue2}
                       onKeyPress={handleKeyPress}
                       placeholder="e.g., 2 3/8 or 1/4 or 3"
                     />
@@ -157,11 +154,7 @@ function App() {
                 </Row>
               </Form>
               
-              <QuickFractions 
-                onSelect={handleQuickFraction}
-                title={`Quick Fractions (will fill ${activeInput === 1 ? 'first' : 'second'} measurement)`}
-              />
-              
+
               {result && (
                 <Alert variant="success" className="text-center">
                   <h4 className="mb-2">Result</h4>
@@ -238,6 +231,7 @@ function App() {
                   <strong className="mt-2 d-block">Shortcuts:</strong>
                   <ul className="small mb-0">
                     <li>Press Enter to calculate</li>
+                    <li>Click + or − to switch operations</li>
                     <li>Use "Use Result" to chain calculations</li>
                   </ul>
                 </Col>

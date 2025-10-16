@@ -10,7 +10,7 @@ A React web application for adding and subtracting fractional length measurement
   - Fractions: `1/2`, `3/4`, `7/8`
   - Mixed numbers: `1 1/2`, `2 3/4`, `5 7/16`
 - **Automatic Simplification**: Results are automatically reduced to simplest form
-- **Quick Fraction Buttons**: One-click input for common woodworking fractions
+
 - **Calculation History**: Keep track of your recent calculations with timestamps
 - **Decimal Conversion**: See decimal equivalents for precise measurements
 - **Bootstrap UI**: Clean, responsive interface using React Bootstrap
@@ -33,12 +33,11 @@ npm start
 ## Usage
 
 1. Enter your first measurement in the first input field
-2. Select addition (+) or subtraction (-) operation
+2. Click the **+** or **−** buttons to select your operation (+ is default)
 3. Enter your second measurement in the second input field
 4. Click "Calculate" or press **Enter** to see the result
 5. Use **"Use Result"** button to move the result to the first field for chaining calculations
-6. Use quick fraction buttons for common measurements
-7. View calculation history below the main calculator
+6. View calculation history below the main calculator
 
 ### Keyboard Shortcuts
 - **Enter**: Calculate the result (when both fields have values)
@@ -61,12 +60,12 @@ Perfect for complex calculations like: `12 1/4" - 3 7/8" + 2 1/2" - 1/4"`
 
 ## Common Woodworking Fractions
 
-The app includes quick buttons for all standard woodworking fractions:
+The app supports all standard woodworking fractions:
 - Sixteenths: 1/16, 3/16, 5/16, 7/16, 9/16, 11/16, 13/16, 15/16
 - Eighths: 1/8, 3/8, 5/8, 7/8
 - Quarters: 1/4, 3/4
 - Halves: 1/2
-- Whole: 1
+- Mixed numbers: 1 1/2, 2 3/4, 5 7/16, etc.
 
 ## Build for Production
 
@@ -90,12 +89,11 @@ Builds the app for production to the `build` folder. The build is minified and o
 ```
 src/
 ├── components/
-│   ├── FractionInput.js    # Custom input component with unit display
-│   └── QuickFractions.js   # Quick fraction selector buttons
+│   └── FractionInput.jsx   # Custom input component with unit display
 ├── utils/
 │   └── fractionUtils.js    # Fraction calculation engine
-├── App.js                  # Main application component
-└── index.js               # React entry point
+├── App.jsx                 # Main application component
+└── main.jsx               # React entry point
 ```
 
 ## Security & Performance
