@@ -21,7 +21,7 @@ const FractionInput = ({
           size="lg"
           disabled={disabled}
         />
-        <InputGroup.Text>"</InputGroup.Text>
+        <InputGroup.Text>inches</InputGroup.Text>
       </InputGroup>
       <Form.Text className="text-muted">
         Enter as: whole number, fraction, or mixed number
