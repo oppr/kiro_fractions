@@ -13,20 +13,21 @@
   },
   "homepage": "https://yourusername.github.io/woodworking-calculator",
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
     "bootstrap": "^5.3.3",
-    "react-bootstrap": "^2.10.4"
+    "react": "^18.3.1",
+    "react-bootstrap": "^2.10.4",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.8",
+    "@testing-library/react": "^14.3.1",
+    "@testing-library/user-event": "^14.5.2",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
+    "gh-pages": "^6.3.0",
+    "jsdom": "^25.0.1",
     "vite": "^5.4.8",
-    "vitest": "^2.1.1",
-    "@testing-library/react": "^14.3.1",
-    "@testing-library/jest-dom": "^6.4.8",
-    "@testing-library/user-event": "^14.5.2",
-    "jsdom": "^25.0.1"
+    "vitest": "^2.1.1"
   }
 }
