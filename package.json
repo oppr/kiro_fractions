@@ -8,8 +8,10 @@
     "start": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "deploy": "gh-pages -d dist"
   },
+  "homepage": "https://yourusername.github.io/woodworking-calculator",
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
